@@ -12,6 +12,10 @@
 
 # testing
 /coverage
+junit.xml
+*.test.js.snap
+*.test.ts.snap
+*.test.tsx.snap
 
 # next.js
 /.next/
