@@ -1,11 +1,11 @@
 {
-  "servers": {
+  "mcpServers": {
     "shadcn": {
       "command": "npx",
       "args": [
         "shadcn@latest",
         "mcp"
-      ],
+      ]
     },
     "next-devtools": {
       "command": "npx",
