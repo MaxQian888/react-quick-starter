@@ -144,8 +144,11 @@ The following Next.js modules are automatically mocked in `jest.setup.ts`:
 
 Tests run automatically on:
 
-- Push to `main` or `develop` branches
-- Pull requests to `main` or `develop` branches
+- Push to `master` or `develop` branches via `.github/workflows/ci.yml`
+- Pull requests to `master` or `develop` branches via `.github/workflows/ci.yml`
+- Version tags via `.github/workflows/release.yml`
+
+The `test.yml` reusable workflow itself is invoked by `ci.yml`/`release.yml`, and can also be run manually with `workflow_dispatch` when you want to debug test/build steps in isolation.
 
 The CI pipeline:
 

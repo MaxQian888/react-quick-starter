@@ -207,7 +207,7 @@ API_SECRET_KEY=your-secret-key
 {
   "productName": "react-quick-starter",    // 应用名称
   "version": "0.1.0",                      // 应用版本
-  "identifier": "com.tauri.dev",          // 唯一应用标识符
+  "identifier": "com.reactquickstarter.desktop", // 唯一应用标识符
   "build": {
     "frontendDist": "../out",              // Next.js 构建输出
     "devUrl": "http://localhost:3000"      // 开发服务器 URL

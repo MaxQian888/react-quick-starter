@@ -207,7 +207,7 @@ Edit `src-tauri/tauri.conf.json` to customize your desktop app:
 {
   "productName": "react-quick-starter",    // App name
   "version": "0.1.0",                      // App version
-  "identifier": "com.tauri.dev",          // Unique app identifier
+  "identifier": "com.reactquickstarter.desktop", // Unique app identifier
   "build": {
     "frontendDist": "../out",              // Next.js build output
     "devUrl": "http://localhost:3000"      // Dev server URL

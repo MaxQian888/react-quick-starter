@@ -6,12 +6,19 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 
+type MockNextImageProps = React.ComponentPropsWithoutRef<'img'> & {
+  priority?: boolean;
+  fill?: boolean;
+};
+
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
-    // eslint-disable-next-line jsx-a11y/alt-text
-    return React.createElement('img', props);
+  default: (props: MockNextImageProps) => {
+    const normalizedProps = { ...props };
+    delete normalizedProps.priority;
+    delete normalizedProps.fill;
+    return React.createElement('img', normalizedProps);
   },
 }));
 

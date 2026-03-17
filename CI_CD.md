@@ -17,15 +17,16 @@ The CI/CD pipeline is implemented using GitHub Actions and includes the followin
 
 The pipeline runs on:
 
-- **Push** to `main` or `develop` branches
-- **Pull requests** to `main` or `develop` branches
-- **Tags** starting with `v` (for releases)
+- **Push** to `master` or `develop` branches via `.github/workflows/ci.yml`
+- **Pull requests** to `master` or `develop` branches via `.github/workflows/ci.yml`
+- **Tags** starting with `v` via `.github/workflows/release.yml`
+- **Manual dispatch** for `.github/workflows/quality.yml` and `.github/workflows/test.yml` (for isolated debugging)
 
 ## Jobs Overview
 
 ### 1. Code Quality & Security
 
-**Runs on:** All pushes and pull requests  
+**Runs on:** Called by `ci.yml` / `release.yml` (or manual dispatch)  
 **Duration:** ~2-3 minutes
 
 This job performs:
@@ -39,7 +40,7 @@ This job performs:
 
 ### 2. Test Suite
 
-**Runs on:** All pushes and pull requests  
+**Runs on:** Called by `ci.yml` / `release.yml` (or manual dispatch)  
 **Duration:** ~3-5 minutes
 
 This job performs:
@@ -88,7 +89,7 @@ Automatically deploys preview versions of the application for pull requests.
 
 ### 4. Deploy Production (DISABLED BY DEFAULT)
 
-**Runs on:** Pushes to `main` branch (when enabled)  
+**Runs on:** Pushes to `master` branch (when enabled)  
 **Duration:** ~2-3 minutes
 
 ⚠️ **This job is commented out by default for safety.**

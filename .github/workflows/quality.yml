@@ -8,15 +8,8 @@ name: Code Quality
 # ============================================================================
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
   workflow_call:
+  workflow_dispatch:
 
 concurrency:
   group: quality-${{ github.ref }}
