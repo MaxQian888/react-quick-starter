@@ -45,7 +45,7 @@ jobs:
           echo "3. See \`CI_CD.md\` for detailed setup instructions" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10
 
