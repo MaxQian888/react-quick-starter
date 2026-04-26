@@ -11,12 +11,29 @@
 
 ## Build, Test, and Development Commands
 
-- `pnpm dev` — Run Next.js in development.
-- `pnpm build` — Create a production build.
-- `pnpm start` — Serve the production build.
-- `pnpm lint` — Run ESLint. Use `--fix` to auto-fix.
-- `pnpm tauri dev` — Launch desktop app (requires Rust toolchain).
-- `pnpm tauri build` — Build desktop binaries.
+```bash
+# Frontend
+pnpm dev              # Start Next.js dev server
+pnpm build            # Build for production (outputs to out/)
+pnpm lint             # Run ESLint
+pnpm lint:fix         # Auto-fix ESLint issues
+pnpm format           # Format with Prettier
+pnpm format:check     # Check formatting without writing
+pnpm typecheck        # TypeScript --noEmit
+
+# Testing
+pnpm test             # Run Jest tests
+pnpm test:watch       # Run tests in watch mode
+pnpm test:coverage    # Run tests with coverage report
+
+# Desktop (Tauri)
+pnpm tauri dev        # Dev mode with hot reload
+pnpm tauri build      # Build desktop installer
+pnpm tauri info       # Check Tauri environment
+
+# Add shadcn/ui components
+pnpm dlx shadcn@latest add <component-name>
+```
 
 ## Coding Style & Naming Conventions
 

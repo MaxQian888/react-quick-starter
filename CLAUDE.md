@@ -18,15 +18,15 @@ React + Tauri desktop application starter: Next.js 16 (React 19) + Tauri 2.9 + T
 pnpm dev              # Start Next.js dev server
 pnpm build            # Build for production (outputs to out/)
 pnpm lint             # Run ESLint
-pnpm lint --fix       # Auto-fix ESLint issues
+pnpm lint:fix         # Auto-fix ESLint issues
+pnpm format           # Format with Prettier
+pnpm format:check     # Check formatting without writing
+pnpm typecheck        # TypeScript --noEmit
 
 # Testing
 pnpm test             # Run Jest tests
 pnpm test:watch       # Run tests in watch mode
 pnpm test:coverage    # Run tests with coverage report
-
-# Type checking
-pnpm exec tsc --noEmit
 
 # Desktop (Tauri)
 pnpm tauri dev        # Dev mode with hot reload
@@ -44,7 +44,6 @@ pnpm dlx shadcn@latest add <component-name>
 - `app/` - Next.js App Router (layout.tsx, page.tsx, globals.css)
 - `components/ui/` - shadcn/ui components using Radix UI + class-variance-authority
 - `lib/utils.ts` - `cn()` utility (clsx + tailwind-merge)
-- `__tests__/` - Jest tests with React Testing Library
 
 ### Tauri Integration
 
@@ -75,6 +74,14 @@ cn("base-classes", condition && "conditional", className)
 <Button asChild>
   <Link href="/path">Click me</Link>
 </Button>
+```
+
+```tsx
+// Calling Rust from the frontend (Tauri only) — see lib/tauri.ts
+import { greet, isTauri } from "@/lib/tauri"
+if (isTauri()) {
+  greet("World").then((msg) => console.log(msg))
+}
 ```
 
 ## Critical Notes

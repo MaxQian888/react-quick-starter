@@ -16,7 +16,7 @@ Thank you for your interest in contributing to React Quick Starter! This documen
 
 ## Code of Conduct
 
-By participating in this project, you agree to maintain a respectful and inclusive environment. Please be considerate of others and focus on constructive collaboration.
+See [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
@@ -166,6 +166,14 @@ test(button): add accessibility tests
 - [ ] Linked related issues
 
 ## Coding Standards
+
+**Tooling enforcement** (auto-runs on commit):
+
+- **Prettier** formats staged files via `lint-staged`
+- **ESLint --fix** runs on staged TS/JS files
+- **commitlint** validates commit messages against Conventional Commits
+
+First-time setup: `pnpm install` — the `prepare` script installs git hooks via Husky. If hooks don't fire, run `pnpm exec husky` manually.
 
 ### TypeScript
 

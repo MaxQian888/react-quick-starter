@@ -120,13 +120,19 @@ This command:
 
 ### Frontend Scripts
 
-| Command           | Description                                                    |
-| ----------------- | -------------------------------------------------------------- |
-| `pnpm dev`        | Start Next.js development server on port 3000                  |
-| `pnpm build`      | Build Next.js app for production (outputs to `out/` directory) |
-| `pnpm start`      | Start Next.js production server (after `pnpm build`)           |
-| `pnpm lint`       | Run ESLint to check code quality                               |
-| `pnpm lint --fix` | Auto-fix ESLint issues                                         |
+| Command              | Description                                                    |
+| -------------------- | -------------------------------------------------------------- |
+| `pnpm dev`           | Start Next.js development server on port 3000                  |
+| `pnpm build`         | Build Next.js app for production (outputs to `out/` directory) |
+| `pnpm start`         | Start Next.js production server (after `pnpm build`)           |
+| `pnpm lint`          | Run ESLint to check code quality                               |
+| `pnpm lint:fix`      | Auto-fix ESLint issues                                         |
+| `pnpm format`        | Format all files with Prettier                                 |
+| `pnpm format:check`  | Check formatting without writing                               |
+| `pnpm typecheck`     | Run TypeScript type-check (no emit)                            |
+| `pnpm test`          | Run Jest unit tests                                            |
+| `pnpm test:watch`    | Run Jest in watch mode                                         |
+| `pnpm test:coverage` | Run Jest with coverage report                                  |
 
 ### Tauri (Desktop) Scripts
 
@@ -171,7 +177,6 @@ react-quick-starter/
 │   └── Cargo.toml          # Rust dependencies
 ├── components.json          # shadcn/ui configuration
 ├── next.config.ts          # Next.js configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
 ├── tsconfig.json           # TypeScript configuration
 ├── eslint.config.mjs       # ESLint configuration
 └── package.json            # Node.js dependencies and scripts
@@ -181,17 +186,13 @@ react-quick-starter/
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory for environment-specific variables:
+Copy `.env.example` to `.env.local` to start:
 
-```env
-# Example environment variables
-NEXT_PUBLIC_API_URL=https://api.example.com
-NEXT_PUBLIC_APP_NAME=React Quick Starter
-
-# Private variables (not exposed to browser)
-DATABASE_URL=postgresql://...
-API_SECRET_KEY=your-secret-key
+```bash
+cp .env.example .env.local
 ```
+
+Then edit `.env.local` to fill in your values. The `lib/env.ts` module validates required vars at first access.
 
 **Important**:
 
@@ -382,7 +383,7 @@ See [Tauri Distribution Guide](https://tauri.app/v1/guides/distribution/) for de
 ### Best Practices
 
 - **Code Style**: Follow ESLint rules (`pnpm lint`)
-- **Commits**: Use conventional commits (feat:, fix:, docs:, etc.)
+- **Commits**: Conventional Commits are enforced via the `commit-msg` hook (commitlint). After cloning, run `pnpm install` once — the `prepare` script auto-installs the hooks.
 - **Components**: Keep components small and reusable
 - **State**: Use Zustand for global state, React hooks for local state
 - **Styling**: Use Tailwind utility classes, avoid custom CSS when possible

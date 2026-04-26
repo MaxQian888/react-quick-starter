@@ -120,13 +120,19 @@ pnpm tauri dev
 
 ### 前端脚本
 
-| 命令              | 描述                                              |
-| ----------------- | ------------------------------------------------- |
-| `pnpm dev`        | 在 3000 端口启动 Next.js 开发服务器               |
-| `pnpm build`      | 构建生产环境的 Next.js 应用（输出到 `out/` 目录） |
-| `pnpm start`      | 启动 Next.js 生产服务器（在 `pnpm build` 之后）   |
-| `pnpm lint`       | 运行 ESLint 检查代码质量                          |
-| `pnpm lint --fix` | 自动修复 ESLint 问题                              |
+| 命令                 | 描述                                              |
+| -------------------- | ------------------------------------------------- |
+| `pnpm dev`           | 在端口 3000 启动 Next.js 开发服务器               |
+| `pnpm build`         | 构建 Next.js 应用用于生产（输出到 `out/` 目录）   |
+| `pnpm start`         | 启动 Next.js 生产服务器（执行 `pnpm build` 之后） |
+| `pnpm lint`          | 运行 ESLint 检查代码质量                          |
+| `pnpm lint:fix`      | 自动修复 ESLint 问题                              |
+| `pnpm format`        | 用 Prettier 格式化所有文件                        |
+| `pnpm format:check`  | 检查格式而不写入                                  |
+| `pnpm typecheck`     | 运行 TypeScript 类型检查（不生成产物）            |
+| `pnpm test`          | 运行 Jest 单元测试                                |
+| `pnpm test:watch`    | 监听模式运行 Jest                                 |
+| `pnpm test:coverage` | 运行 Jest 并生成覆盖率报告                        |
 
 ### Tauri（桌面）脚本
 
@@ -171,7 +177,6 @@ react-quick-starter/
 │   └── Cargo.toml          # Rust 依赖
 ├── components.json          # shadcn/ui 配置
 ├── next.config.ts          # Next.js 配置
-├── tailwind.config.ts      # Tailwind CSS 配置
 ├── tsconfig.json           # TypeScript 配置
 ├── eslint.config.mjs       # ESLint 配置
 └── package.json            # Node.js 依赖和脚本
@@ -181,17 +186,13 @@ react-quick-starter/
 
 ### 环境变量
 
-在根目录创建 `.env.local` 文件以配置特定环境的变量：
+将 `.env.example` 复制为 `.env.local` 开始使用：
 
-```env
-# 示例环境变量
-NEXT_PUBLIC_API_URL=https://api.example.com
-NEXT_PUBLIC_APP_NAME=React Quick Starter
-
-# 私有变量（不会暴露给浏览器）
-DATABASE_URL=postgresql://...
-API_SECRET_KEY=your-secret-key
+```bash
+cp .env.example .env.local
 ```
+
+然后编辑 `.env.local` 填入实际值。`lib/env.ts` 模块会在首次访问时校验必需变量。
 
 **重要提示**：
 
@@ -382,7 +383,7 @@ out
 ### 最佳实践
 
 - **代码风格**：遵循 ESLint 规则（`pnpm lint`）
-- **提交**：使用约定式提交（feat:、fix:、docs: 等）
+- **提交规范**：通过 `commit-msg` 钩子（commitlint）强制 Conventional Commits。clone 后运行一次 `pnpm install` —— `prepare` 脚本会自动安装钩子。
 - **组件**：保持组件小而可复用
 - **状态**：使用 Zustand 管理全局状态，使用 React hooks 管理局部状态
 - **样式**：使用 Tailwind 工具类，尽可能避免自定义 CSS

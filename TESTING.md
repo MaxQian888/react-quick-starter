@@ -44,6 +44,16 @@ pnpm test --testNamePattern="Button"
 
 ## Test File Structure
 
+### Test File Organization
+
+Tests are **collocated** with their source files:
+
+- `app/page.tsx` → `app/page.test.tsx`
+- `lib/utils.ts` → `lib/utils.test.ts`
+- `components/ui/button.tsx` → `components/ui/button.test.tsx`
+
+There is **no** `__tests__/` directory. Jest discovers `*.test.{ts,tsx}` anywhere under `app/`, `components/`, and `lib/` (see `testMatch` in `jest.config.ts`).
+
 Test files should be placed next to the files they test with the `.test.ts` or `.test.tsx` extension:
 
 ```
