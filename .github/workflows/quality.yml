@@ -62,8 +62,11 @@ jobs:
         run: pnpm lint
         continue-on-error: true
 
+      - name: Check formatting (Prettier)
+        run: pnpm format:check
+
       - name: TypeScript type checking
-        run: pnpm exec tsc --noEmit
+        run: pnpm typecheck
 
       - name: Security audit
         run: pnpm audit --audit-level=moderate
