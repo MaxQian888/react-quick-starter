@@ -32,18 +32,18 @@
 
 ### 新增配置文件
 
-| 文件 | 内容要点 |
-|---|---|
-| `.prettierrc.json` | `semi: false`、`singleQuote: false`、`printWidth: 100`、`tabWidth: 2`、`trailingComma: "es5"`（与 `components/ui/button.tsx` 现有风格一致，不会触发大规模 reformat） |
-| `.prettierignore` | 同 `.gitignore` 主体 + `pnpm-lock.yaml` |
-| `.husky/pre-commit` | 执行 `pnpm exec lint-staged` |
-| `.husky/commit-msg` | 执行 `pnpm exec commitlint --edit "$1"` |
-| `commitlint.config.cjs` | `extends: ['@commitlint/config-conventional']`（与 CONTRIBUTING.md 已声明的规则一致） |
-| `.lintstagedrc.json` | `*.{ts,tsx,js,mjs,cjs}` → `eslint --fix` + `prettier --write`；`*.{json,md,yml,yaml,css}` → `prettier --write` |
-| `.nvmrc` | `20`（与 README "Node 20.x or later" 对齐，CI 复用） |
-| `.env.example` | 列出 `NEXT_PUBLIC_APP_NAME`、`NEXT_PUBLIC_API_URL` 占位 |
-| `lib/env.ts` | 最小运行时校验（不引入 zod）：导出 `getPublicEnv()`，缺失变量时抛错；导出类型 `PublicEnv` |
-| `env.d.ts` | 扩展 `ProcessEnv`，给 `NEXT_PUBLIC_*` 变量加类型提示 |
+| 文件                    | 内容要点                                                                                                                                                             |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.prettierrc.json`      | `semi: false`、`singleQuote: false`、`printWidth: 100`、`tabWidth: 2`、`trailingComma: "es5"`（与 `components/ui/button.tsx` 现有风格一致，不会触发大规模 reformat） |
+| `.prettierignore`       | 同 `.gitignore` 主体 + `pnpm-lock.yaml`                                                                                                                              |
+| `.husky/pre-commit`     | 执行 `pnpm exec lint-staged`                                                                                                                                         |
+| `.husky/commit-msg`     | 执行 `pnpm exec commitlint --edit "$1"`                                                                                                                              |
+| `commitlint.config.cjs` | `extends: ['@commitlint/config-conventional']`（与 CONTRIBUTING.md 已声明的规则一致）                                                                                |
+| `.lintstagedrc.json`    | `*.{ts,tsx,js,mjs,cjs}` → `eslint --fix` + `prettier --write`；`*.{json,md,yml,yaml,css}` → `prettier --write`                                                       |
+| `.nvmrc`                | `20`（与 README "Node 20.x or later" 对齐，CI 复用）                                                                                                                 |
+| `.env.example`          | 列出 `NEXT_PUBLIC_APP_NAME`、`NEXT_PUBLIC_API_URL` 占位                                                                                                              |
+| `lib/env.ts`            | 最小运行时校验（不引入 zod）：导出 `getPublicEnv()`，缺失变量时抛错；导出类型 `PublicEnv`                                                                            |
+| `env.d.ts`              | 扩展 `ProcessEnv`，给 `NEXT_PUBLIC_*` 变量加类型提示                                                                                                                 |
 
 ### `package.json` 修订
 
@@ -62,14 +62,14 @@
 
 新增/修订 scripts：
 
-| script | 命令 |
-|---|---|
-| `format` | `prettier --write .` |
-| `format:check` | `prettier --check .` |
-| `typecheck` | `tsc --noEmit` |
-| `lint:fix` | `eslint --fix` |
-| `lint` | `eslint .`（修复当前 `"eslint"` 无显式路径，更稳） |
-| `prepare` | `husky` |
+| script         | 命令                                               |
+| -------------- | -------------------------------------------------- |
+| `format`       | `prettier --write .`                               |
+| `format:check` | `prettier --check .`                               |
+| `typecheck`    | `tsc --noEmit`                                     |
+| `lint:fix`     | `eslint --fix`                                     |
+| `lint`         | `eslint .`（修复当前 `"eslint"` 无显式路径，更稳） |
+| `prepare`      | `husky`                                            |
 
 ### `eslint.config.mjs` 修订
 
@@ -86,15 +86,16 @@
 
 ### 新增治理文件
 
-| 文件 | 内容 |
-|---|---|
-| `SECURITY.md` | 简洁漏洞披露策略：报告渠道（GitHub Security Advisories 私有报告 + 备用邮箱占位）、支持的版本、披露时间窗（90 天）。约 30 行 |
-| `.github/CODEOWNERS` | `* @AstroAir @MaxQian888`；`src-tauri/` 留示范注释行 `# @rust-team` |
-| `CODE_OF_CONDUCT.md` | Contributor Covenant 2.1 全文（CONTRIBUTING.md 已引用但文件缺失） |
+| 文件                 | 内容                                                                                                                        |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `SECURITY.md`        | 简洁漏洞披露策略：报告渠道（GitHub Security Advisories 私有报告 + 备用邮箱占位）、支持的版本、披露时间窗（90 天）。约 30 行 |
+| `.github/CODEOWNERS` | `* @AstroAir @MaxQian888`；`src-tauri/` 留示范注释行 `# @rust-team`                                                         |
+| `CODE_OF_CONDUCT.md` | Contributor Covenant 2.1 全文（CONTRIBUTING.md 已引用但文件缺失）                                                           |
 
 ### 修订现有文档（消除内部矛盾）
 
 **`README.md`**:
+
 - 删除 "Project Structure" 中虚构的 `tailwind.config.ts`（Tailwind v4 不需要，文件实际不存在）
 - "Available Scripts > Frontend Scripts" 表格补全 `test`、`test:watch`、`test:coverage`、`format`、`format:check`、`typecheck`
 - "Best Practices > Commits" 一句话指向 commitlint 现已强制（避免文档说"约定"但工具不验证）
@@ -103,6 +104,7 @@
 **`README_zh.md`**: 同步上述四处修订。
 
 **`CLAUDE.md`**:
+
 - "Architecture > Frontend Structure" 删除 `__tests__/` 一行（仓库实际用 collocated `*.test.tsx`）
 - "Development Commands" 把 `pnpm exec tsc --noEmit` 替换为 `pnpm typecheck`，加上 `pnpm format` / `pnpm format:check`
 - "Code Patterns" 加一段 1-2 行的 IPC 调用示例（指向段落 4 新增的 `lib/tauri.ts`）
@@ -110,6 +112,7 @@
 **`AGENTS.md`**: 与 CLAUDE.md 同步上述命令清单。
 
 **`CONTRIBUTING.md`**:
+
 - "Coding Standards" 明示已有 Prettier + Husky + commitlint，附 `pnpm prepare` 指引（首次 clone 必须跑一次激活 hooks）
 - "Code of Conduct" 段落改为指向新建的 `CODE_OF_CONDUCT.md`
 
@@ -127,13 +130,13 @@
 
 ### `src-tauri/Cargo.toml` 元数据
 
-| 字段 | 当前值 | 改为 |
-|---|---|---|
-| `name` | `"app"` | `"react-quick-starter"`（与 `package.json` / `tauri.conf.json` 的 `productName` 一致；`[lib].name = "app_lib"` 保留不变） |
-| `description` | `"A Tauri App"` | `"React + Tauri 16/2.9 quick-starter desktop application"` |
-| `authors` | `["you"]` | `["AstroAir <astro_air@126.com>"]` |
-| `license` | `""` | `"MIT"`（与根 LICENSE 一致） |
-| `repository` | `""` | `"https://github.com/AstroAir/react-quick-starter"` |
+| 字段          | 当前值          | 改为                                                                                                                      |
+| ------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `name`        | `"app"`         | `"react-quick-starter"`（与 `package.json` / `tauri.conf.json` 的 `productName` 一致；`[lib].name = "app_lib"` 保留不变） |
+| `description` | `"A Tauri App"` | `"React + Tauri 16/2.9 quick-starter desktop application"`                                                                |
+| `authors`     | `["you"]`       | `["AstroAir <astro_air@126.com>"]`                                                                                        |
+| `license`     | `""`            | `"MIT"`（与根 LICENSE 一致）                                                                                              |
+| `repository`  | `""`            | `"https://github.com/AstroAir/react-quick-starter"`                                                                       |
 
 新增依赖（用于段落 4 的错误派生）：`thiserror = "2"`，`tauri-plugin-updater = "2"`。
 
@@ -155,6 +158,7 @@ form-action 'self'
 ```
 
 理由：
+
 - `style-src 'unsafe-inline'` 是必需的（Tailwind v4 注入 inline style；Next.js critical CSS）
 - `connect-src` 包含 `ipc: http://ipc.localhost` 以允许 Tauri 2 的 IPC 通道
 - 其余按最小权限
@@ -202,6 +206,7 @@ form-action 'self'
 `active: false` 默认禁用，避免 fork 后忘记配密钥导致启动报错。
 
 新增 `src-tauri/UPDATER.md`（≤50 行）：
+
 1. `pnpm tauri signer generate` 生成密钥对（私钥放 `~/.tauri/`，绝不入仓）
 2. 公钥粘贴到 `tauri.conf.json` 的 `plugins.updater.pubkey`
 3. `endpoints` 写 GitHub Releases 的 `latest.json` URL（给出模板）
@@ -332,10 +337,10 @@ export async function greet(name: string): Promise<string> {
 
 ## 风险与缓解
 
-| 风险 | 缓解 |
-|---|---|
-| 改 `Cargo.toml` 的 `[package].name` 后第一次 `cargo build` 会重新生成 target 目录 | 文档说明这是预期，建议先 `cargo clean` |
-| Husky hook 在 fork 后未自动激活 | `prepare` script 会在 `pnpm install` 时跑；CONTRIBUTING.md 明示 |
-| CSP 太严会破坏未来引入的第三方脚本 | 注释中明示扩展位置；任何新增外部资源需要同步修改 CSP |
-| `@tauri-apps/api` 加入 dependencies 在纯 web 模式下被打包 | `isTauri()` 早返回避免运行时调用；`@tauri-apps/api/core` 的 `invoke` 是 ESM 函数，未调用不会真正执行 IPC，对 bundle size 影响 ~3KB gzipped |
-| commitlint 拒绝既有非规范 commit message 的 amend 操作 | hooks 仅校验新 commit，不影响 git history |
+| 风险                                                                              | 缓解                                                                                                                                       |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 改 `Cargo.toml` 的 `[package].name` 后第一次 `cargo build` 会重新生成 target 目录 | 文档说明这是预期，建议先 `cargo clean`                                                                                                     |
+| Husky hook 在 fork 后未自动激活                                                   | `prepare` script 会在 `pnpm install` 时跑；CONTRIBUTING.md 明示                                                                            |
+| CSP 太严会破坏未来引入的第三方脚本                                                | 注释中明示扩展位置；任何新增外部资源需要同步修改 CSP                                                                                       |
+| `@tauri-apps/api` 加入 dependencies 在纯 web 模式下被打包                         | `isTauri()` 早返回避免运行时调用；`@tauri-apps/api/core` 的 `invoke` 是 ESM 函数，未调用不会真正执行 IPC，对 bundle size 影响 ~3KB gzipped |
+| commitlint 拒绝既有非规范 commit message 的 amend 操作                            | hooks 仅校验新 commit，不影响 git history                                                                                                  |

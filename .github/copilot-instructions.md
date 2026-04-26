@@ -3,6 +3,7 @@
 ## Project Architecture
 
 This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** combining:
+
 - **Frontend**: React 19 + TypeScript + Tailwind CSS v4 + shadcn/ui components
 - **Desktop wrapper**: Tauri v2.9 (Rust-based) for native desktop capabilities
 - **State management**: Zustand (configured but not actively used in starter)
@@ -17,13 +18,15 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 ## Key File Locations & Conventions
 
 ### Routing & Layouts
+
 - `app/layout.tsx`: Root layout, configures Geist fonts via `next/font/google`, imports `globals.css`
 - `app/page.tsx`: Home route demonstrating Tailwind + `next/image` usage
 - Path alias: `@/*` maps to repo root (e.g., `@/lib/utils`)
 
 ### Styling System
+
 - **Tailwind v4** via PostCSS plugin (`@tailwindcss/postcss`)
-- `app/globals.css`: 
+- `app/globals.css`:
   - Imports `tailwindcss` and `tw-animate-css`
   - Defines CSS variables for theme colors (oklch color space)
   - Uses `@theme inline` to map CSS vars to Tailwind utilities
@@ -31,6 +34,7 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 - Color system: All colors defined as CSS variables (light + `.dark` overrides)
 
 ### Component Patterns
+
 - **shadcn/ui components** in `components/ui/`
 - Example: `components/ui/button.tsx` uses:
   - `@radix-ui/react-slot` for `asChild` polymorphism
@@ -39,8 +43,9 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 - Config: `components.json` defines shadcn settings (New York style, RSC mode)
 
 ### Tauri Integration
+
 - `src-tauri/src/lib.rs`: Main Tauri setup (enables debug logging in dev)
-- `src-tauri/tauri.conf.json`: 
+- `src-tauri/tauri.conf.json`:
   - `devUrl`: Points to Next.js dev server
   - `frontendDist`: Expects `../out` (static export)
   - `beforeDevCommand`: Runs `pnpm dev`
@@ -49,7 +54,9 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 ## Developer Workflows
 
 ### Package Management
+
 **Always use pnpm** (lockfile present). Commands:
+
 - `pnpm install` - Install dependencies
 - `pnpm dev` - Next.js dev server (web-only)
 - `pnpm tauri dev` - Desktop app with hot reload
@@ -57,6 +64,7 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 - `pnpm tauri build` - Create desktop installer (requires static export)
 
 ### Code Quality
+
 - **Type checking**: `pnpm exec tsc --noEmit` (strict mode enabled)
 - **Linting**: `pnpm run lint` (ESLint flat config with `eslint-config-next`)
   - Auto-fix: `pnpm exec eslint . --fix`
@@ -64,21 +72,27 @@ This is a **Next.js 16 (App Router) + Tauri v2 hybrid desktop application** comb
 - **No test framework configured** (no test scripts present)
 
 ### Adding shadcn/ui Components
+
 Use the shadcn CLI: `pnpm dlx shadcn@latest add <component-name>`
+
 - Components install to `components/ui/`
 - Automatically uses configured aliases and style
 
 ## Project-Specific Patterns
 
 ### Import Paths
+
 Always use `@/` alias for internal imports:
+
 ```typescript
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 ```
 
 ### Component Composition
+
 Prefer composition patterns with `asChild` for buttons/links:
+
 ```tsx
 <Button asChild>
   <Link href="/path">Click me</Link>
@@ -86,11 +100,13 @@ Prefer composition patterns with `asChild` for buttons/links:
 ```
 
 ### Dark Mode
+
 - Class-based dark mode (not media query)
 - Apply `.dark` class to parent element
 - All color utilities automatically support dark variants via custom variant
 
 ### Styling Utilities
+
 - Use `cn()` from `@/lib/utils` to merge Tailwind classes safely
 - Example: `cn("base-classes", conditionalClass && "conditional-classes", className)`
 

@@ -11,7 +11,7 @@ Reference: https://nextjs.org/docs/app/getting-started/error-handling
 Catches errors in a route segment and its children:
 
 ```tsx
-'use client'
+"use client"
 
 export default function Error({
   error,
@@ -36,7 +36,7 @@ export default function Error({
 Catches errors in root layout:
 
 ```tsx
-'use client'
+"use client"
 
 export default function GlobalError({
   error,
@@ -107,6 +107,7 @@ async function createPost(formData: FormData) {
 ```
 
 Same applies to:
+
 - `redirect()` - 307 temporary redirect
 - `permanentRedirect()` - 308 permanent redirect
 - `notFound()` - 404 not found
@@ -116,15 +117,15 @@ Same applies to:
 Use `unstable_rethrow()` to re-throw these errors in catch blocks:
 
 ```tsx
-import { unstable_rethrow } from 'next/navigation'
+import { unstable_rethrow } from "next/navigation"
 
 async function action() {
   try {
     // ...
-    redirect('/success')
+    redirect("/success")
   } catch (error) {
     unstable_rethrow(error) // Re-throws Next.js internal errors
-    return { error: 'Something went wrong' }
+    return { error: "Something went wrong" }
   }
 }
 ```
@@ -132,13 +133,13 @@ async function action() {
 ## Redirects
 
 ```tsx
-import { redirect, permanentRedirect } from 'next/navigation'
+import { redirect, permanentRedirect } from "next/navigation"
 
 // 307 Temporary - use for most cases
-redirect('/new-path')
+redirect("/new-path")
 
 // 308 Permanent - use for URL migrations (cached by browsers)
-permanentRedirect('/new-url')
+permanentRedirect("/new-url")
 ```
 
 ## Auth Errors
@@ -146,7 +147,7 @@ permanentRedirect('/new-url')
 Trigger auth-related error pages:
 
 ```tsx
-import { forbidden, unauthorized } from 'next/navigation'
+import { forbidden, unauthorized } from "next/navigation"
 
 async function Page() {
   const session = await getSession()
@@ -197,14 +198,14 @@ export default function NotFound() {
 ### Triggering Not Found
 
 ```tsx
-import { notFound } from 'next/navigation'
+import { notFound } from "next/navigation"
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const post = await getPost(id)
 
   if (!post) {
-    notFound()  // Renders closest not-found.tsx
+    notFound() // Renders closest not-found.tsx
   }
 
   return <div>{post.title}</div>

@@ -261,12 +261,12 @@ concurrency:
 
 All jobs upload artifacts that are retained for 7-30 days:
 
-| Artifact | Retention | Description |
-|----------|-----------|-------------|
-| `test-results` | 30 days | JUnit XML test results |
-| `coverage-report` | 30 days | HTML coverage reports |
-| `nextjs-build` | 7 days | Built Next.js application |
-| `tauri-*` | 30 days | Platform-specific installers |
+| Artifact          | Retention | Description                  |
+| ----------------- | --------- | ---------------------------- |
+| `test-results`    | 30 days   | JUnit XML test results       |
+| `coverage-report` | 30 days   | HTML coverage reports        |
+| `nextjs-build`    | 7 days    | Built Next.js application    |
+| `tauri-*`         | 30 days   | Platform-specific installers |
 
 ## Required GitHub Secrets
 

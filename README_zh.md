@@ -68,7 +68,7 @@
    ```bash
    # 检查 Next.js 是否就绪
    pnpm dev
-   
+
    # 检查 Tauri 是否就绪（可选，用于桌面开发）
    pnpm tauri info
    ```
@@ -120,23 +120,23 @@ pnpm tauri dev
 
 ### 前端脚本
 
-| 命令 | 描述 |
-|------|------|
-| `pnpm dev` | 在 3000 端口启动 Next.js 开发服务器 |
-| `pnpm build` | 构建生产环境的 Next.js 应用（输出到 `out/` 目录） |
-| `pnpm start` | 启动 Next.js 生产服务器（在 `pnpm build` 之后） |
-| `pnpm lint` | 运行 ESLint 检查代码质量 |
-| `pnpm lint --fix` | 自动修复 ESLint 问题 |
+| 命令              | 描述                                              |
+| ----------------- | ------------------------------------------------- |
+| `pnpm dev`        | 在 3000 端口启动 Next.js 开发服务器               |
+| `pnpm build`      | 构建生产环境的 Next.js 应用（输出到 `out/` 目录） |
+| `pnpm start`      | 启动 Next.js 生产服务器（在 `pnpm build` 之后）   |
+| `pnpm lint`       | 运行 ESLint 检查代码质量                          |
+| `pnpm lint --fix` | 自动修复 ESLint 问题                              |
 
 ### Tauri（桌面）脚本
 
-| 命令 | 描述 |
-|------|------|
-| `pnpm tauri dev` | 启动 Tauri 开发模式，支持热重载 |
-| `pnpm tauri build` | 构建生产环境的桌面应用 |
-| `pnpm tauri info` | 显示 Tauri 环境信息 |
-| `pnpm tauri icon` | 从源图像生成应用图标 |
-| `pnpm tauri --help` | 显示所有可用的 Tauri 命令 |
+| 命令                | 描述                            |
+| ------------------- | ------------------------------- |
+| `pnpm tauri dev`    | 启动 Tauri 开发模式，支持热重载 |
+| `pnpm tauri build`  | 构建生产环境的桌面应用          |
+| `pnpm tauri info`   | 显示 Tauri 环境信息             |
+| `pnpm tauri icon`   | 从源图像生成应用图标            |
+| `pnpm tauri --help` | 显示所有可用的 Tauri 命令       |
 
 ### 添加 UI 组件（shadcn/ui）
 
@@ -205,21 +205,23 @@ API_SECRET_KEY=your-secret-key
 
 ```json
 {
-  "productName": "react-quick-starter",    // 应用名称
-  "version": "0.1.0",                      // 应用版本
+  "productName": "react-quick-starter", // 应用名称
+  "version": "0.1.0", // 应用版本
   "identifier": "com.reactquickstarter.desktop", // 唯一应用标识符
   "build": {
-    "frontendDist": "../out",              // Next.js 构建输出
-    "devUrl": "http://localhost:3000"      // 开发服务器 URL
+    "frontendDist": "../out", // Next.js 构建输出
+    "devUrl": "http://localhost:3000" // 开发服务器 URL
   },
   "app": {
-    "windows": [{
-      "title": "react-quick-starter",      // 窗口标题
-      "width": 800,                        // 默认宽度
-      "height": 600,                       // 默认高度
-      "resizable": true,                   // 允许调整大小
-      "fullscreen": false                  // 全屏启动
-    }]
+    "windows": [
+      {
+        "title": "react-quick-starter", // 窗口标题
+        "width": 800, // 默认宽度
+        "height": 600, // 默认高度
+        "resizable": true, // 允许调整大小
+        "fullscreen": false // 全屏启动
+      }
+    ]
   }
 }
 ```

@@ -3,45 +3,45 @@
  * This file is executed before each test file
  */
 
-import '@testing-library/jest-dom';
-import React from 'react';
+import "@testing-library/jest-dom"
+import React from "react"
 
-type MockNextImageProps = React.ComponentPropsWithoutRef<'img'> & {
-  priority?: boolean;
-  fill?: boolean;
-};
+type MockNextImageProps = React.ComponentPropsWithoutRef<"img"> & {
+  priority?: boolean
+  fill?: boolean
+}
 
 // Mock Next.js Image component
-jest.mock('next/image', () => ({
+jest.mock("next/image", () => ({
   __esModule: true,
   default: (props: MockNextImageProps) => {
-    const normalizedProps = { ...props };
-    delete normalizedProps.priority;
-    delete normalizedProps.fill;
-    return React.createElement('img', normalizedProps);
+    const normalizedProps = { ...props }
+    delete normalizedProps.priority
+    delete normalizedProps.fill
+    return React.createElement("img", normalizedProps)
   },
-}));
+}))
 
 // Mock Next.js router
-jest.mock('next/navigation', () => ({
+jest.mock("next/navigation", () => ({
   useRouter() {
     return {
       push: jest.fn(),
       replace: jest.fn(),
       prefetch: jest.fn(),
       back: jest.fn(),
-      pathname: '/',
+      pathname: "/",
       query: {},
-      asPath: '/',
-    };
+      asPath: "/",
+    }
   },
   usePathname() {
-    return '/';
+    return "/"
   },
   useSearchParams() {
-    return new URLSearchParams();
+    return new URLSearchParams()
   },
-}));
+}))
 
 // Suppress console errors in tests (optional)
 // global.console = {
@@ -49,4 +49,3 @@ jest.mock('next/navigation', () => ({
 //   error: jest.fn(),
 //   warn: jest.fn(),
 // };
-

@@ -78,6 +78,7 @@ git checkout -b <type>/<description>
 ```
 
 Branch types:
+
 - `feat/` - New features
 - `fix/` - Bug fixes
 - `docs/` - Documentation changes
@@ -86,6 +87,7 @@ Branch types:
 - `chore/` - Maintenance tasks
 
 Examples:
+
 - `feat/add-dark-mode-toggle`
 - `fix/navigation-scroll-issue`
 - `docs/update-installation-guide`
@@ -114,19 +116,19 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/) specifica
 
 ### Types
 
-| Type | Description |
-|------|-------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation only |
-| `style` | Code style (formatting, semicolons, etc.) |
+| Type       | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | New feature                                             |
+| `fix`      | Bug fix                                                 |
+| `docs`     | Documentation only                                      |
+| `style`    | Code style (formatting, semicolons, etc.)               |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `perf` | Performance improvement |
-| `test` | Adding or updating tests |
-| `build` | Build system or external dependencies |
-| `ci` | CI/CD configuration |
-| `chore` | Other changes that don't modify src or test files |
-| `revert` | Reverts a previous commit |
+| `perf`     | Performance improvement                                 |
+| `test`     | Adding or updating tests                                |
+| `build`    | Build system or external dependencies                   |
+| `ci`       | CI/CD configuration                                     |
+| `chore`    | Other changes that don't modify src or test files       |
+| `revert`   | Reverts a previous commit                               |
 
 ### Examples
 
@@ -199,13 +201,13 @@ components/
 
 ### Naming Conventions
 
-| Type | Convention | Example |
-|------|------------|---------|
-| Components | PascalCase | `UserProfile.tsx` |
-| Hooks | camelCase with `use` prefix | `useAuth.ts` |
-| Utilities | camelCase | `formatDate.ts` |
-| Types/Interfaces | PascalCase | `UserData` |
-| Constants | SCREAMING_SNAKE_CASE | `MAX_RETRIES` |
+| Type             | Convention                  | Example           |
+| ---------------- | --------------------------- | ----------------- |
+| Components       | PascalCase                  | `UserProfile.tsx` |
+| Hooks            | camelCase with `use` prefix | `useAuth.ts`      |
+| Utilities        | camelCase                   | `formatDate.ts`   |
+| Types/Interfaces | PascalCase                  | `UserData`        |
+| Constants        | SCREAMING_SNAKE_CASE        | `MAX_RETRIES`     |
 
 ## Testing
 

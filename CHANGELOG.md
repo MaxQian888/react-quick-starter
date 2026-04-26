@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial project setup with Next.js 16 and React 19
 - Tauri 2.9 integration for cross-platform desktop applications
 - Tailwind CSS v4 with CSS variables and dark mode support
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Release workflow for version tags
 
 ### Documentation
+
 - Comprehensive README with installation and usage instructions
 - Chinese documentation (README_zh.md)
 - CI/CD setup guide (CI_CD.md)
@@ -33,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2024-01-28
 
 ### Added
+
 - Initial release
 - Next.js 16 App Router setup
 - React 19 with new features support

@@ -7,14 +7,15 @@ These are React directives, not Next.js specific.
 ### `'use client'`
 
 Marks a component as a Client Component. Required for:
+
 - React hooks (`useState`, `useEffect`, etc.)
 - Event handlers (`onClick`, `onChange`)
 - Browser APIs (`window`, `localStorage`)
 
 ```tsx
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
 export function Counter() {
   const [count, setCount] = useState(0)
@@ -29,7 +30,7 @@ Reference: https://react.dev/reference/rsc/use-client
 Marks a function as a Server Action. Can be passed to Client Components.
 
 ```tsx
-'use server'
+"use server"
 
 export async function submitForm(formData: FormData) {
   // Runs on server
@@ -41,7 +42,7 @@ Or inline within a Server Component:
 ```tsx
 export default function Page() {
   async function submit() {
-    'use server'
+    "use server"
     // Runs on server
   }
   return <form action={submit}>...</form>
@@ -59,7 +60,7 @@ Reference: https://react.dev/reference/rsc/use-server
 Marks a function or component for caching. Part of Next.js Cache Components.
 
 ```tsx
-'use cache'
+"use cache"
 
 export async function getCachedData() {
   return await fetchData()
