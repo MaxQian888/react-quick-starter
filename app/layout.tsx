@@ -1,3 +1,6 @@
+// NOTE: The Tauri production CSP is set in src-tauri/tauri.conf.json.
+// If you call an external API from the browser, add its origin to the
+// `connect-src` directive there, otherwise the request will be blocked.
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
