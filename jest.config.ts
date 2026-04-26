@@ -103,6 +103,9 @@ const config: Config = {
 
     // Handle image imports
     "^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i": "<rootDir>/__mocks__/fileMock.js",
+
+    // Mock Tauri API for Jest (not available in jsdom)
+    "^@tauri-apps/api/core$": "<rootDir>/__mocks__/tauri-api.js",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

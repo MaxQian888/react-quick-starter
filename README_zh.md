@@ -116,6 +116,35 @@ pnpm tauri dev
 - `src-tauri/tauri.conf.json` - Tauri 配置
 - `src-tauri/Cargo.toml` - Rust 依赖
 
+### 从 JavaScript 调用 Rust
+
+该模板内置了一个类型安全的 IPC 桥接示例。使用模式如下：
+
+1. **在 `src-tauri/src/commands.rs` 中添加 Rust 命令**：
+
+   ```rust
+   #[tauri::command]
+   pub fn my_command(arg: &str) -> Result<String, AppError> {
+     Ok(format!("got {arg}"))
+   }
+   ```
+
+2. **在 `src-tauri/src/lib.rs` 中注册命令**：
+
+   ```rust
+   .invoke_handler(tauri::generate_handler![commands::greet, commands::my_command])
+   ```
+
+3. **在 `lib/tauri.ts` 中添加类型化封装函数**：
+
+   ```ts
+   export async function myCommand(arg: string): Promise<string> {
+     return invoke<string>("my_command", { arg })
+   }
+   ```
+
+`lib/tauri.ts` 是唯一调用 `invoke()` 的地方——业务代码从中导入具名函数，而非直接使用 `invoke`。使用 `isTauri()` 来保护依赖桌面运行时的代码路径。
+
 ## 可用脚本
 
 ### 前端脚本

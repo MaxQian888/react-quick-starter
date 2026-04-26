@@ -1,3 +1,5 @@
+mod commands;
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   let mut builder = tauri::Builder::default();
@@ -8,6 +10,7 @@ pub fn run() {
   }
 
   builder
+    .invoke_handler(tauri::generate_handler![commands::greet])
     .setup(|app| {
       if cfg!(debug_assertions) {
         app.handle().plugin(

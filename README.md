@@ -116,6 +116,35 @@ This command:
 - `src-tauri/tauri.conf.json` - Tauri configuration
 - `src-tauri/Cargo.toml` - Rust dependencies
 
+### Calling Rust from JavaScript
+
+The template ships a typed IPC bridge demo. Pattern:
+
+1. **Add a Rust command** in `src-tauri/src/commands.rs`:
+
+   ```rust
+   #[tauri::command]
+   pub fn my_command(arg: &str) -> Result<String, AppError> {
+     Ok(format!("got {arg}"))
+   }
+   ```
+
+2. **Register it** in `src-tauri/src/lib.rs`:
+
+   ```rust
+   .invoke_handler(tauri::generate_handler![commands::greet, commands::my_command])
+   ```
+
+3. **Add a typed wrapper** in `lib/tauri.ts`:
+
+   ```ts
+   export async function myCommand(arg: string): Promise<string> {
+     return invoke<string>("my_command", { arg })
+   }
+   ```
+
+`lib/tauri.ts` is the single point that calls `invoke()` — business code imports named functions from it. Use `isTauri()` to gate any code path that depends on the desktop runtime.
+
 ## Available Scripts
 
 ### Frontend Scripts
