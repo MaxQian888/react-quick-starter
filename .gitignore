@@ -48,3 +48,7 @@ next-env.d.ts
 #Windsurf
 .windsurfrules
 .ace-tool/
+
+# docs workspace
+docs/.next/
+docs/.source/
