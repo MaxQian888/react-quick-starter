@@ -6,75 +6,41 @@
 
 **Architecture:** A new pnpm workspace package `docs/` contains a Fumadocs Next.js app (fumadocs-ui + fumadocs-mdx) running in full server mode with no `output: "export"` constraint. The root `pnpm-lock.yaml` is the single lockfile for both packages. TypeScript, ESLint, and Prettier configs are shared by inheritance and auto-discovery. The docs dev server runs on port 3001.
 
-**Tech Stack:** Next.js 16, React 19, fumadocs-ui (latest), fumadocs-core (latest), fumadocs-mdx (latest), TypeScript 5.x.
+**Tech Stack:** Next.js 16, React 19, fumadocs-ui (latest), fumadocs-core (latest), fumadocs-mdx (latest), Tailwind CSS v4, TypeScript 5.x.
 
 **Spec:** `docs/superpowers/specs/2026-04-28-fumadocs-integration-design.md`
+
+**Source:** Official Fumadocs docs at https://www.fumadocs.dev/docs
 
 ---
 
 ## File Map
 
-| Action | Path                                 | Purpose                                                   |
-| ------ | ------------------------------------ | --------------------------------------------------------- |
-| Create | `pnpm-workspace.yaml`                | Declares `docs` as workspace package                      |
-| Modify | `package.json`                       | Adds `docs:dev`, `docs:build`, `docs:start` scripts       |
-| Modify | `.gitignore`                         | Ignores `docs/.next/` and `docs/.source/`                 |
-| Create | `docs/package.json`                  | Docs package manifest and scripts                         |
-| Create | `docs/tsconfig.json`                 | Extends root tsconfig, overrides `@/*` paths to docs root |
-| Create | `docs/next.config.ts`                | Next.js config wrapping fumadocs-mdx MDX plugin           |
-| Create | `docs/source.config.ts`              | Fumadocs content collection definition                    |
-| Create | `docs/app/source.ts`                 | Fumadocs loader — central content access point            |
-| Create | `docs/app/layout.tsx`                | Root layout with `RootProvider` + Fumadocs CSS            |
-| Create | `docs/app/page.tsx`                  | Root page that redirects `/` → `/docs`                    |
-| Create | `docs/app/docs/layout.tsx`           | `DocsLayout` with sidebar and nav title                   |
-| Create | `docs/app/docs/[[...slug]]/page.tsx` | Dynamic doc page with `generateStaticParams`              |
-| Create | `docs/app/api/search/route.ts`       | Orama search API route                                    |
-| Create | `docs/content/docs/meta.json`        | Sidebar page order                                        |
-| Create | `docs/content/docs/index.mdx`        | Placeholder doc page                                      |
+| Action  | Path                                 | Purpose                                                     |
+| ------- | ------------------------------------ | ----------------------------------------------------------- |
+| ✅ Done | `pnpm-workspace.yaml`                | Declares `docs` as workspace package                        |
+| ✅ Done | `package.json`                       | Adds `docs:dev`, `docs:build`, `docs:start` scripts         |
+| ✅ Done | `.gitignore`                         | Ignores `/docs/.next/` and `/docs/.source/`                 |
+| Create  | `docs/package.json`                  | Docs package manifest and scripts                           |
+| Create  | `docs/tsconfig.json`                 | Extends root tsconfig, adds `collections/*` and `@/*` paths |
+| Create  | `docs/postcss.config.mjs`            | PostCSS config for Tailwind CSS v4                          |
+| Create  | `docs/next.config.ts`                | Next.js config wrapping fumadocs-mdx MDX plugin             |
+| Create  | `docs/source.config.ts`              | Fumadocs content collection definition                      |
+| Create  | `docs/lib/source.ts`                 | Fumadocs loader — central content access point              |
+| Create  | `docs/app/global.css`                | Tailwind v4 + Fumadocs UI theme CSS imports                 |
+| Create  | `docs/app/layout.tsx`                | Root layout with `RootProvider` + global.css                |
+| Create  | `docs/app/page.tsx`                  | Root page that redirects `/` → `/docs`                      |
+| Create  | `docs/app/docs/layout.tsx`           | `DocsLayout` with sidebar and nav title                     |
+| Create  | `docs/app/docs/[[...slug]]/page.tsx` | Dynamic doc page with `generateStaticParams`                |
+| Create  | `docs/app/api/search/route.ts`       | Orama search API route                                      |
+| Create  | `docs/content/docs/meta.json`        | Sidebar page order                                          |
+| Create  | `docs/content/docs/index.mdx`        | Placeholder doc page                                        |
 
 ---
 
-## Task 1: Configure pnpm workspace and root scripts
+## Task 1: Configure pnpm workspace and root scripts ✅ DONE
 
-**Files:**
-
-- Create: `pnpm-workspace.yaml`
-- Modify: `package.json`
-- Modify: `.gitignore`
-
-- [ ] **Step 1: Create `pnpm-workspace.yaml`**
-
-```yaml
-packages:
-  - docs
-```
-
-- [ ] **Step 2: Add docs scripts to root `package.json`**
-
-In the `"scripts"` object, add after the `"test:coverage"` line:
-
-```json
-"docs:dev": "pnpm -F docs dev",
-"docs:build": "pnpm -F docs build",
-"docs:start": "pnpm -F docs start"
-```
-
-- [ ] **Step 3: Add docs build artifacts to `.gitignore`**
-
-Append to the end of `.gitignore`:
-
-```
-# docs workspace
-docs/.next/
-docs/.source/
-```
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add pnpm-workspace.yaml package.json .gitignore
-git commit -m "chore: add pnpm workspace with docs package"
-```
+Completed in commit 7823b2e + 9bc7f5c.
 
 ---
 
@@ -84,6 +50,7 @@ git commit -m "chore: add pnpm workspace with docs package"
 
 - Create: `docs/package.json`
 - Create: `docs/tsconfig.json`
+- Create: `docs/postcss.config.mjs`
 
 - [ ] **Step 1: Create `docs/package.json`**
 
@@ -109,7 +76,10 @@ git commit -m "chore: add pnpm workspace with docs package"
     "typescript": "^5.9.3",
     "@types/node": "^22.19.17",
     "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3"
+    "@types/react-dom": "^19.2.3",
+    "@types/mdx": "latest",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/postcss": "^4.0.0"
   }
 }
 ```
@@ -121,7 +91,8 @@ git commit -m "chore: add pnpm workspace with docs package"
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "collections/*": ["./.source/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
@@ -129,20 +100,30 @@ git commit -m "chore: add pnpm workspace with docs package"
 }
 ```
 
-> The `paths` override makes `@/` resolve relative to the `docs/` directory (not the repo root), so `@/app/source` → `docs/app/source.ts`.
+> `@/*` maps to the `docs/` root for internal imports. `collections/*` maps to `.source/` — the directory generated by `fumadocs-mdx` at build time — following the official Fumadocs convention.
 
-- [ ] **Step 3: Install docs dependencies**
+- [ ] **Step 3: Create `docs/postcss.config.mjs`**
+
+```mjs
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+}
+```
+
+- [ ] **Step 4: Install docs dependencies**
 
 ```bash
 pnpm install
 ```
 
-Expected: pnpm installs Fumadocs packages into `docs/node_modules/` and updates the root `pnpm-lock.yaml`.
+Expected: pnpm installs Fumadocs and Tailwind packages into `docs/node_modules/` and updates the root `pnpm-lock.yaml`.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add docs/package.json docs/tsconfig.json pnpm-lock.yaml
+git add docs/package.json docs/tsconfig.json docs/postcss.config.mjs pnpm-lock.yaml
 git commit -m "chore(docs): scaffold workspace package with Fumadocs deps"
 ```
 
@@ -154,7 +135,7 @@ git commit -m "chore(docs): scaffold workspace package with Fumadocs deps"
 
 - Create: `docs/next.config.ts`
 - Create: `docs/source.config.ts`
-- Create: `docs/app/source.ts`
+- Create: `docs/lib/source.ts`
 
 - [ ] **Step 1: Create `docs/next.config.ts`**
 
@@ -183,10 +164,10 @@ export const docs = defineDocs({
 export default defineConfig()
 ```
 
-- [ ] **Step 3: Create `docs/app/source.ts`**
+- [ ] **Step 3: Create `docs/lib/source.ts`**
 
 ```typescript
-import { docs } from "@/.source"
+import { docs } from "collections/server"
 import { loader } from "fumadocs-core/source"
 
 export const source = loader({
@@ -195,12 +176,12 @@ export const source = loader({
 })
 ```
 
-> `@/.source` is auto-generated by `fumadocs-mdx` the first time `next dev` or `next build` runs. TypeScript will show an error for this import on a fresh clone until you run the dev server once.
+> `collections/server` is the TypeScript alias configured in tsconfig.json, resolving to `.source/server` — the server-side entry generated by `fumadocs-mdx` when `next dev` or `next build` runs. TypeScript will show an error here on a fresh clone until the dev server generates `.source/`.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add docs/next.config.ts docs/source.config.ts docs/app/source.ts
+git add docs/next.config.ts docs/source.config.ts docs/lib/source.ts
 git commit -m "feat(docs): configure Next.js and Fumadocs MDX plugin"
 ```
 
@@ -246,17 +227,28 @@ git commit -m "feat(docs): add MDX content skeleton"
 
 ---
 
-## Task 5: Build root layout and home redirect
+## Task 5: Build root layout, CSS, and home redirect
 
 **Files:**
 
+- Create: `docs/app/global.css`
 - Create: `docs/app/layout.tsx`
 - Create: `docs/app/page.tsx`
 
-- [ ] **Step 1: Create `docs/app/layout.tsx`**
+- [ ] **Step 1: Create `docs/app/global.css`**
+
+```css
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+```
+
+> This is the correct setup per official Fumadocs UI docs. `neutral.css` sets the color palette; `preset.css` adds Fumadocs-specific utilities and animations. Tailwind CSS v4 is required — Fumadocs UI does not ship a standalone pre-built stylesheet.
+
+- [ ] **Step 2: Create `docs/app/layout.tsx`**
 
 ```tsx
-import "fumadocs-ui/style.css"
+import "./global.css"
 import type { ReactNode } from "react"
 import { RootProvider } from "fumadocs-ui/provider"
 
@@ -271,9 +263,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 ```
 
-> `suppressHydrationWarning` is required because `RootProvider` injects a theme class on the `<html>` element client-side.
+> `suppressHydrationWarning` is required because `RootProvider` injects a theme class on `<html>` client-side. `RootProvider` includes `next-themes` dark/light mode support.
 
-- [ ] **Step 2: Create `docs/app/page.tsx`**
+- [ ] **Step 3: Create `docs/app/page.tsx`**
 
 ```tsx
 import { redirect } from "next/navigation"
@@ -283,11 +275,11 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
-git add docs/app/layout.tsx docs/app/page.tsx
-git commit -m "feat(docs): add root layout with RootProvider and home redirect"
+git add docs/app/global.css docs/app/layout.tsx docs/app/page.tsx
+git commit -m "feat(docs): add root layout with RootProvider, Tailwind CSS, and home redirect"
 ```
 
 ---
@@ -303,7 +295,7 @@ git commit -m "feat(docs): add root layout with RootProvider and home redirect"
 ```tsx
 import type { ReactNode } from "react"
 import { DocsLayout } from "fumadocs-ui/layouts/docs"
-import { source } from "@/app/source"
+import { source } from "@/lib/source"
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -336,7 +328,7 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { DocsPage, DocsBody, DocsTitle, DocsDescription } from "fumadocs-ui/page"
 import defaultMdxComponents from "fumadocs-ui/mdx"
-import { source } from "@/app/source"
+import { source } from "@/lib/source"
 
 type Props = {
   params: Promise<{ slug?: string[] }>
@@ -376,7 +368,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 ```
 
-> `params` is a `Promise` in Next.js 15+. `page.data.body` is the compiled MDX React component. `page.data.toc` is the table of contents array.
+> `params` is a `Promise` in Next.js 15+. `page.data.body` is the compiled MDX React component. `page.data.toc` is the table of contents.
 
 - [ ] **Step 2: Commit**
 
@@ -396,7 +388,7 @@ git commit -m "feat(docs): add dynamic docs page with metadata and static params
 - [ ] **Step 1: Create `docs/app/api/search/route.ts`**
 
 ```typescript
-import { source } from "@/app/source"
+import { source } from "@/lib/source"
 import { createFromSource } from "fumadocs-core/search/server"
 
 export const { GET } = createFromSource(source)
@@ -423,14 +415,7 @@ git commit -m "feat(docs): add Orama search API route"
 pnpm docs:dev
 ```
 
-Expected output includes:
-
-```
-- Local:        http://localhost:3001
-- Ready in ...
-```
-
-The `docs/.source/` directory is generated automatically by `fumadocs-mdx` on first start.
+Expected: Next.js dev server starts on port 3001. `docs/.source/` directory is generated automatically by `fumadocs-mdx` on first start.
 
 - [ ] **Step 2: Verify home redirect**
 
@@ -455,15 +440,9 @@ Stop the dev server (`Ctrl+C`), then:
 pnpm docs:build
 ```
 
-Expected: Build completes with no TypeScript errors. Output ends with:
+Expected: Build completes without TypeScript errors. Output ends with route table in terminal.
 
-```
-Route (app)                             Size
-┌ ○ /                                   ...
-└ ○ /docs                               ...
-```
-
-- [ ] **Step 6: Commit verification artifacts**
+- [ ] **Step 6: Final commit**
 
 ```bash
 git add -A
@@ -474,14 +453,14 @@ git commit -m "chore(docs): verify Fumadocs skeleton builds and runs"
 
 ## Troubleshooting
 
-**`Cannot find module '@/.source'`** — Run `pnpm docs:dev` once to generate the `.source/` directory, then TypeScript errors will clear.
+**`Cannot find module 'collections/server'`** — Run `pnpm docs:dev` once to generate the `.source/` directory, then TypeScript errors will clear.
 
-**`source.getPageTree is not a function`** — The Fumadocs version may use `source.pageTree` (property) instead of `source.getPageTree()` (method). Replace in `docs/app/docs/layout.tsx` accordingly.
+**`source.getPageTree is not a function`** — Try `source.pageTree` (property) instead of `source.getPageTree()` (method) in the layout.
 
-**`docs.toFumadocsSource is not a function`** — Older Fumadocs uses `createMDXSource(docs)` from `fumadocs-mdx`. Replace `docs/app/source.ts` with:
+**`docs.toFumadocsSource is not a function`** — Try:
 
 ```typescript
-import { docs } from "@/.source"
+import { docs } from "collections/server"
 import { createMDXSource } from "fumadocs-mdx"
 import { loader } from "fumadocs-core/source"
 
@@ -490,3 +469,5 @@ export const source = loader({
   source: createMDXSource(docs),
 })
 ```
+
+**CSS not loading** — Ensure `postcss.config.mjs` exists in `docs/` and `@tailwindcss/postcss` is installed.
