@@ -50,5 +50,5 @@ next-env.d.ts
 .ace-tool/
 
 # docs workspace
-docs/.next/
-docs/.source/
+/docs/.next/
+/docs/.source/
