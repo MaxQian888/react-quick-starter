@@ -1,4 +1,7 @@
+import createNextIntlPlugin from "next-intl/plugin"
 import type { NextConfig } from "next"
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts")
 
 const isProd = process.env.NODE_ENV === "production"
 
@@ -17,4 +20,4 @@ const nextConfig: NextConfig = {
   assetPrefix: isProd ? undefined : `http://${internalHost}:3000`,
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig)
