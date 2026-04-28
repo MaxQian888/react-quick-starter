@@ -14,6 +14,7 @@
 - 🔤 **Geist 字体** 通过 next/font 优化
 - 🎯 **TypeScript** 提供类型安全
 - 🎭 **Lucide Icons** 精美的图标库
+- 📚 **Fumadocs** 文档站点，作为 pnpm workspace 子包
 - 📱 双重部署：从同一代码库部署 Web 应用或桌面应用
 
 ## 前置要求
@@ -173,6 +174,14 @@ pnpm tauri dev
 | `pnpm tauri icon`   | 从源图像生成应用图标            |
 | `pnpm tauri --help` | 显示所有可用的 Tauri 命令       |
 
+### 文档站点脚本（Fumadocs — 端口 3001）
+
+| 命令              | 描述                                     |
+| ----------------- | ---------------------------------------- |
+| `pnpm docs:dev`   | 在端口 3001 启动 Fumadocs 开发服务器     |
+| `pnpm docs:build` | 构建文档生产版本（输出到 `docs/.next/`） |
+| `pnpm docs:start` | 在端口 3001 启动文档生产服务器           |
+
 ### 添加 UI 组件（shadcn/ui）
 
 ```bash
@@ -187,7 +196,7 @@ pnpm dlx shadcn@latest add button card dialog
 
 ```
 react-quick-starter/
-├── app/                      # Next.js App Router
+├── app/                      # Next.js App Router（主应用）
 │   ├── layout.tsx           # 根布局，包含字体和元数据
 │   ├── page.tsx             # 主着陆页
 │   ├── globals.css          # 全局样式和 Tailwind 配置
@@ -204,11 +213,26 @@ react-quick-starter/
 │   ├── icons/              # 桌面应用图标
 │   ├── tauri.conf.json     # Tauri 配置
 │   └── Cargo.toml          # Rust 依赖
+├── docs/                    # Fumadocs 文档站点（workspace 子包）
+│   ├── app/                # Next.js App Router（文档）
+│   │   ├── layout.tsx      # 根布局，含 RootProvider
+│   │   ├── page.tsx        # 重定向到 /docs
+│   │   ├── global.css      # Tailwind v4 + Fumadocs 主题
+│   │   ├── docs/           # 文档路由
+│   │   │   ├── layout.tsx  # 含侧边栏的 DocsLayout
+│   │   │   └── [[...slug]]/ # 动态 MDX 页面
+│   │   └── api/search/     # Orama 搜索 API 路由
+│   ├── lib/source.ts       # Fumadocs 内容加载器
+│   ├── content/docs/       # MDX 内容文件
+│   ├── source.config.ts    # 内容集合配置
+│   ├── next.config.ts      # Next.js 配置（无静态导出）
+│   └── package.json        # 文档包依赖
+├── pnpm-workspace.yaml      # pnpm monorepo 配置
 ├── components.json          # shadcn/ui 配置
-├── next.config.ts          # Next.js 配置
+├── next.config.ts          # Next.js 配置（主应用）
 ├── tsconfig.json           # TypeScript 配置
 ├── eslint.config.mjs       # ESLint 配置
-└── package.json            # Node.js 依赖和脚本
+└── package.json            # 根依赖和脚本
 ```
 
 ## 配置
@@ -322,6 +346,20 @@ pnpm tauri build --bundles none
 ```
 
 ## 部署
+
+### 文档站点部署
+
+文档站点（`docs/`）是一个完整的 Next.js 服务端应用，与主应用独立部署。
+
+```bash
+# 构建文档
+pnpm docs:build
+
+# 输出：docs/.next/
+# 部署到任意 Node.js 托管平台：Vercel、Netlify、Railway 等
+```
+
+在 **Vercel** 上，导入项目时将根目录设置为 `docs/`。
 
 ### Web 部署
 
@@ -454,9 +492,17 @@ cargo clean
 # 清除 Next.js 缓存
 rm -rf .next
 
-# 重新安装依赖
-rm -rf node_modules pnpm-lock.yaml
+# 重新安装所有 workspace 依赖
+rm -rf node_modules docs/node_modules pnpm-lock.yaml
 pnpm install
+```
+
+**文档中出现 `Cannot find module 'collections/server'`**
+
+该模块由 fumadocs-mdx 自动生成。运行一次文档开发服务器即可生成：
+
+```bash
+pnpm docs:dev
 ```
 
 ## 了解更多
@@ -482,6 +528,10 @@ pnpm install
 ### 状态管理
 
 - [Zustand](https://zustand-demo.pmnd.rs/) - Zustand 文档
+
+### 文档
+
+- [Fumadocs](https://fumadocs.dev/) - Fumadocs 文档框架
 
 ## 贡献
 
