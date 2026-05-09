@@ -56,6 +56,11 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
+        with:
+          # Must match packageManager in package.json. Pinning here also
+          # prevents the action from auto-pulling pnpm 11, which requires
+          # Node >= 22.13 and crashes on the Node 20 used below.
+          version: 10.30.3
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
