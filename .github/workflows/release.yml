@@ -21,6 +21,13 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
+# Reusable workflows can only request permissions up to those granted here.
+# test.yml needs pull-requests + checks write; create-release needs contents write.
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
 jobs:
   # Run quality checks first
   quality:

@@ -31,6 +31,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Reusable workflows can only request permissions up to those granted here.
+# test.yml needs pull-requests + checks write to publish test result comments on PRs.
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 jobs:
   # Step 1: Code Quality Checks
   quality:

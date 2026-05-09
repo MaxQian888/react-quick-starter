@@ -28,6 +28,8 @@ const config: Config = {
     "!**/.next/**",
     "!**/coverage/**",
     "!**/out/**",
+    "!components/ui/**",
+    "!app/**/layout.{js,jsx,ts,tsx}",
   ],
 
   // The directory where Jest should output its coverage files
