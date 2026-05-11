@@ -11,9 +11,9 @@
     "fumadocs-ui": "latest",
     "fumadocs-core": "latest",
     "fumadocs-mdx": "latest",
-    "next": "^16.2.4",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
