@@ -24,7 +24,7 @@
     "docs:start": "pnpm -F docs start"
   },
   "dependencies": {
-    "@base-ui/react": "^1.4.1",
+    "@base-ui/react": "^1.6.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-slot": "^1.2.5",
     "@tauri-apps/api": "^2.11.0",
